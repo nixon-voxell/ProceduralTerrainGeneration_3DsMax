@@ -58,12 +58,9 @@ fn GradientNoise p scale:1.0 = (
 )
 
 fn CreateBoxGrid x y z seed:[0.0, 0.0] scale:1.0 heightScale:1.0 location:[0, 0, 0] size:50 spacing:1 = (
-    for _x = 0 to x-1 do
-    (
-        for _y = 0 to y-1 do
-        (
-            for _z = 0 to z-1 do
-            (
+    for _x = 0 to x-1 do (
+        for _y = 0 to y-1 do (
+            for _z = 0 to z-1 do (
                 vec = [_x as float, _y as float, _z as float]
                 noiseInput = [(_x as float / x as float) as float, (_y as float / y as float) as float]
                 noiseValue = (GradientNoise (noiseInput + seed) scale:scale)
@@ -76,5 +73,3 @@ fn CreateBoxGrid x y z seed:[0.0, 0.0] scale:1.0 heightScale:1.0 location:[0, 0,
 
 cls()
 CreateBoxGrid 30 30 1 scale:3.0 heightScale:500.0
-
--- GradientNoise [0.966667, 0.966667]
