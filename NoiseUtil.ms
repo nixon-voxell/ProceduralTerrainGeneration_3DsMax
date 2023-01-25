@@ -35,6 +35,10 @@ fn frac_2 p = (
     return p - floor_2 p
 )
 
+fn sin_2 p = (
+    return [sin p.x, sin p.y]
+)
+
 fn GradientNoiseDir i = (
     i = [mod i.x 289.0, mod i.y 289.0]
     x = (34.0 * i.x + 1.0) * (mod i.x 289.0) + i.y
@@ -57,6 +61,18 @@ fn GradientNoise p scale:1.0 = (
     return (lerp (lerp d00 d01 fp.y) (lerp d10 d11 fp.y) fp.x) + 0.5
 )
 
+fn SimpleNoiseRandomValue p = (
+    return frac_2 (sin_2 (dot_2 p [12.9898, 78.233]) * 43758.5453)
+)
+
+fn SimpleNoiseInterpolate a b t = (
+    return (1.0 - t) * a + (t * b)
+)
+
+fn SimpleValueNoise p = (
+    
+)
+
 fn CreateBoxGrid x y z seed:[0.0, 0.0] scale:1.0 heightScale:1.0 location:[0, 0, 0] size:50 spacing:1 = (
     for _x = 0 to x-1 do (
         for _y = 0 to y-1 do (
@@ -70,6 +86,3 @@ fn CreateBoxGrid x y z seed:[0.0, 0.0] scale:1.0 heightScale:1.0 location:[0, 0,
         )
     )
 )
-
-cls()
-CreateBoxGrid 30 30 1 scale:3.0 heightScale:500.0
