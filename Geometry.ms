@@ -4,7 +4,7 @@ fn FlattenIdx x y width = (
     return x + y * width
 )
 
-fn CreateTerrain resolution size maxHeight noiseScale:1.0 = (
+fn CreateTerrain resolution size maxHeight minHeight noiseScale0:3 noiseScale1:10 noiseScale2:100 = (
     vert_array = #()
     face_array = #()
 
@@ -14,9 +14,12 @@ fn CreateTerrain resolution size maxHeight noiseScale:1.0 = (
         for x = 0 to resolution - 1 do (
             xCoor = x as float / resolution;
             yCoor = y as float / resolution;
-            zCoor = GradientNoise [xCoor, yCoor] scale:noiseScale
+            zCoor = GradientNoise [xCoor, yCoor] scale:noiseScale0
+            zCoor += (GradientNoise [xCoor, yCoor] scale:noiseScale1) * 0.2
+            zCoor += (GradientNoise [xCoor, yCoor] scale:noiseScale2) * 0.02
+            zCoor = amax (zCoor * maxHeight) (minHeight as float)
 
-            vert = [xCoor * size, yCoor * size, zCoor * maxHeight]
+            vert = [xCoor * size, yCoor * size, zCoor]
             append vert_array vert
         )
     )

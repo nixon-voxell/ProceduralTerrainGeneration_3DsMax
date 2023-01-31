@@ -1,9 +1,5 @@
 -- https://help.autodesk.com/view/3DSMAX/2016/ENU/?guid=__files_GUID_B57EA575_DCDE_42F5_9D30_88E3EB41F350_htm
 
-fn cls = (
-    delete objects;
-)
-
 fn CreateTerrainPlane side segs position:[0, 0, 0] = (
     Plane length:side width:side pos:[0, 0, 0] lengthsegs:segs widthsegs:segs
 )

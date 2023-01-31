@@ -1,5 +1,4 @@
 fileIn "Geometry.ms"
 
-cls()
-planeMesh = CreateTerrain 100 10 4 noiseScale:3
+planeMesh = CreateTerrain 100 5000 1000 300 noiseScale0:3 noiseScale1:10 noiseScale2:50
 print planeMesh.vertices[3][1]
