@@ -28,7 +28,7 @@ fn frac x = (
 )
 
 fn frac_2 p = (
-    return p - floor_2 p
+    return [frac p.x, frac p.y]
 )
 
 fn sin_2 p = (

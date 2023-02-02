@@ -4,7 +4,8 @@ fn FlattenIdx x y width = (
     return x + y * width
 )
 
-fn CreateTerrain resolution size maxHeight minHeight noiseScale0:3 noiseScale1:10 noiseScale2:100 = (
+fn CreateTerrain resolution size maxHeight minHeight
+    noiseScale0:3 noiseScale1:10 noiseScale2:100 scroll:0 = (
     vert_array = #()
     face_array = #()
 
@@ -12,11 +13,15 @@ fn CreateTerrain resolution size maxHeight minHeight noiseScale0:3 noiseScale1:1
 
     for y = 0 to resolution - 1 do (
         for x = 0 to resolution - 1 do (
-            xCoor = x as float / resolution;
-            yCoor = y as float / resolution;
-            zCoor = GradientNoise [xCoor, yCoor] scale:noiseScale0
-            zCoor += (GradientNoise [xCoor, yCoor] scale:noiseScale1) * 0.2
-            zCoor += (GradientNoise [xCoor, yCoor] scale:noiseScale2) * 0.02
+            xCoor = x as float / resolution
+            yCoor = y as float / resolution
+
+            xNoise = xCoor + scroll
+            yNoise = yCoor
+
+            zCoor = GradientNoise [xNoise, yNoise] scale:noiseScale0
+            zCoor += (GradientNoise [xNoise, yNoise] scale:noiseScale1) * 0.2
+            zCoor += (GradientNoise [xNoise, yNoise] scale:noiseScale2) * 0.02
             zCoor = amax (zCoor * maxHeight) (minHeight as float)
 
             vert = [xCoor * size, yCoor * size, zCoor]
@@ -38,7 +43,7 @@ fn CreateTerrain resolution size maxHeight minHeight noiseScale0:3 noiseScale1:1
             -- 2 triangles to created a quad
             append face_array face0
             append face_array face1
-         )
+        )
     )
 
     m = mesh vertices:vert_array faces:face_array
