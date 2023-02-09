@@ -6,11 +6,11 @@ fn PopulateTerrain resolution size maxHeight minHeight
     size = size as float
     rotationScroll = populateScroll + 1
 
-    if (selection.count != 1) do return 0
+    if (selection.count != 4) do return 0
     sel = (selection as array)
 
-    for y = 0 to resolution - 1 do (
-        for x = 0 to resolution - 1 do (
+    for y = 1 to resolution - 1 do (
+        for x = 1 to resolution - 1 do (
             xCoor = x as float / resolution
             yCoor = y as float / resolution
 
@@ -31,10 +31,14 @@ fn PopulateTerrain resolution size maxHeight minHeight
             rotationNoiseVal = GradientNoise [xRNoise, yRNoise] scale: populateNoiseScale
 
             if (populateNoiseVal > populateThreshold) do (
-                maxOps.cloneNodes sel cloneType:#instance newNodes:&nnl #nodialog
+                index = 4
+                if (rotationNoiseVal > 0.75) then (index = 1)
+                else if (rotationNoiseVal > 0.5) then (index = 2)
+                else if (rotationNoiseVal > 0.25) then (index = 3)
+                maxOps.cloneNodes sel[index] cloneType:#instance newNodes:&nnl #nodialog
 
                 nnl[1].pos = [xCoor * size, yCoor * size, zCoor]
-                nnl[1].transform = (rotateZmatrix (rotationNoiseVal * 360)) *  nnl[1].transform
+                nnl[1].transform = (rotateZmatrix (rotationNoiseVal * 360 * 3)) * nnl[1].transform
                 nnl[1].scale *= populateNoiseVal
             )
         )
