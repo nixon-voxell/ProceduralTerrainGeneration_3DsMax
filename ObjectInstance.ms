@@ -25,10 +25,12 @@ fn PopulateTerrain resolution size maxHeight minHeight
             yPNoise = yCoor + populateScroll
 
             xRNoise = xCoor + rotationScroll
-            yRNoise = yCoor + rotationScrollw
+            yRNoise = yCoor + rotationScroll
 
-            populateNoiseVal = GradientNoise [xPNoise, yPNoise] scale: populateNoiseScale
+            -- populateNoiseVal = GradientNoise [xPNoise, yPNoise] scale: populateNoiseScale
+			populateNoiseVal = random 0.0 1.0
             rotationNoiseVal = random 0.0 1.0
+			scaleNoiseVal = random 0.4 1.0
 
             if (populateNoiseVal > populateThreshold) do (
                 index = 4
@@ -39,7 +41,7 @@ fn PopulateTerrain resolution size maxHeight minHeight
 
                 nnl[1].pos = [xCoor * size, yCoor * size, zCoor]
                 nnl[1].transform = (rotateZmatrix (rotationNoiseVal * 360 * 3)) * nnl[1].transform
-                nnl[1].scale *= lerp 0.4 1.0 populateNoiseVal
+                nnl[1].scale *= lerp 0.4 1.0 scaleNoiseVal
             )
         )
     )
