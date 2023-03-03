@@ -1,4 +1,4 @@
-
+/*
 $Shaft.parent = $Fuselage
 $Propeller.parent = $Shaft
 
@@ -10,14 +10,17 @@ a.path = $circle
 a.getweight 3
 a.follow = true
 a.bank = true
+*/
 
 animate on 
 (
-	for t in 0 to 100 by 5 do
+	for t in 1 to 500 by 1 do
 	(
 		at time t about $Shaft
 		(
-		rotate $Propeller (angleaxis 720 [1,0,0])
+			propeller = $Propeller
+			-- rotate $Propeller (angleaxis 720 [1,0,0])
+			propeller.transform = (rotateZmatrix -50) * propeller.transform
 		)
 	)
 )
