@@ -15,7 +15,7 @@ fn PopulateTerrain resolution size maxHeight minHeight
             yCoor = y as float / resolution
 
             xGNoise = xCoor + scroll
-            yGNoise = yCoor + scroll
+            yGNoise = yCoor
 
             zCoor = GradientNoise [xGNoise, yGNoise] scale:noiseScale0
             zCoor += (GradientNoise [xGNoise, yGNoise] scale:noiseScale1) * 0.2
